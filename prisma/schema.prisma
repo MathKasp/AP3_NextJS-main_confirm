@@ -63,15 +63,15 @@ model User {
 }
 
 model commandes {
-  id_commande      BigInt             @id @default(autoincrement())
-  id_utilisateur   BigInt
-  id_stock         BigInt
-  date_commande    DateTime?          @default(now()) @db.Timestamp(6)
-  quantite         BigInt
-  statut           statut_commande?   @default(en_attente)
-  utilisateurs     utilisateurs       @relation(fields: [id_utilisateur], references: [id_utilisateur], onDelete: SetNull)
-  stocks           stocks             @relation(fields: [id_stock], references: [id_stock], onDelete: SetNull)
-  mouvements       mouvements[]
+  id_commande    BigInt          @id @default(autoincrement())
+  id_utilisateur BigInt
+  date_commande  DateTime        @default(now()) @db.Timestamp(6)
+  statut         statut_commande @default(en_attente)
+  id_stock       BigInt
+  quantite       BigInt
+  stocks         stocks          @relation(fields: [id_stock], references: [id_stock], onDelete: SetNull)
+  utilisateurs   utilisateurs    @relation(fields: [id_utilisateur], references: [id_utilisateur], onDelete: SetNull)
+  mouvements     mouvements[]
 }
 
 /// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
@@ -80,9 +80,9 @@ model mouvements {
   id_stock       BigInt
   type_mouvement type_mouvement_enum
   quantite       BigInt
-  date_mouvement DateTime?           @default(now()) @db.Timestamp(6)
-  id_commande    BigInt?
-  commandes      commandes?          @relation(fields: [id_commande], references: [id_commande])
+  date_mouvement DateTime            @default(now()) @db.Timestamp(6)
+  id_commande    BigInt
+  commandes      commandes           @relation(fields: [id_commande], references: [id_commande], onDelete: SetNull)
   stocks         stocks              @relation(fields: [id_stock], references: [id_stock], onDelete: SetNull)
 }
 
@@ -94,10 +94,10 @@ model roles {
 
 /// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
 model stocks {
-  id_stock            BigInt             @id @default(autoincrement())
-  nom                 String             @db.VarChar(255)
-  description         String?            @db.VarChar(255)
-  quantite_disponible BigInt?
+  id_stock            BigInt       @id @default(autoincrement())
+  nom                 String       @db.VarChar(255)
+  description         String       @db.VarChar(255)
+  quantite_disponible BigInt
   type                stock_type
   commandes           commandes[]
   mouvements          mouvements[]

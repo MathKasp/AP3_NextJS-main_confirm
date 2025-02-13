@@ -155,7 +155,7 @@ export async function UpdateStatutCommande(data: {
 
 //
 
-export async function GetPendingCommandes(): Promise<SerializedCommandes[]> {
+export async function GetCommandesAttente(): Promise<SerializedCommandes[]> {
     try {
         const commandes = await prisma.commandes.findMany({
             include: {
@@ -193,5 +193,23 @@ export async function GetAllCommandes(): Promise<SerializedCommandes[]> {
     } catch (error) {
       console.error(error);
       throw new Error("Failed to fetch commandes");
+    }
+  }
+
+  export async function DeleteCommande(id: number): Promise<boolean> {
+    try {
+      const commande = await prisma.commandes.findUnique({
+        where: { id_commande: BigInt(id) },
+      });
+  
+      if (!commande) return false;
+  
+      await prisma.commandes.delete({
+        where: { id_commande: BigInt(id) },
+      });
+  
+      return true;
+    } catch (error) {
+      return false;
     }
   }

@@ -1,38 +1,13 @@
 "use client"
 
 import * as React from "react"
-import {
-  BookOpen,
-  Bot,
-  Building2,
-  CircleHelp,
-  Command,
-  Frame,
-  GraduationCap,
-  LifeBuoy,
-  Map,
-  NotebookPen,
-  PieChart,
-  Send,
-  Settings2,
-  SquareTerminal,
-  Eye,
-  Package,
-} from "lucide-react"
+import { BookOpen, Bot, Building2, CircleHelp, Command, Frame, GraduationCap, LifeBuoy, Map, NotebookPen, PieChart, Send, Settings2, SquareTerminal, Eye, Package, Boxes} from "lucide-react"
 
 import { NavMain } from "@/components/sidebar/nav-main"
 import { NavProjects } from "@/components/sidebar/nav-projects"
 import { NavSecondary } from "@/components/sidebar/nav-secondary"
 import { NavUser } from "@/components/sidebar/nav-user"
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarFooter,
-  SidebarHeader,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-} from "@/components/ui/sidebar"
+import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem,} from "@/components/ui/sidebar"
 import { useAuth } from "@/context/AuthContext"
 
 const data = {
@@ -53,7 +28,13 @@ const data = {
       url: "/dashboard/commande",
       icon: Package,
       isActive: true
-    }
+    },
+    {
+      title: "Commandes en Attente",
+      url: "/dashboard/commandeAttente",
+      icon: Boxes,
+      isActive: true
+    },
   ],
   navSecondary: [
     {

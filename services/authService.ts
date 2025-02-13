@@ -22,18 +22,58 @@ export const authUserByEmailAndPassword = async (
 
 export const signupUserByEmailAndPassword = async (
   email: string,
-  password: string
+  password: string,
+  nom: string,
+  prenom: string
 ): Promise<boolean> => {
-  if (!email || !password) return false;
+  if (!email || !password || !nom || !prenom) return false;
 
-  const { data, error } = await supabase.auth.signUp({
-    email: email,
-    password: password,
-  });
+  try {
+    const { data, error } = await supabase.auth.signUp({
+      email: email,
+      password: password,
+    });
 
-  if (error) return false;
+    if (error) {
+      console.error("Erreur lors de la création dans Supabase:", error);
+      return false;
+    }
 
-  return true;
+    if (data.user) {
+      try {
+        const response = await fetch("/api/utilisateurs", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email,
+            password,
+            nom,
+            prenom,
+          }),
+        });
+
+        const result = await response.json();
+
+        if (!result.success) {
+          return false;
+        }
+
+        return true;
+      } catch (error) {
+        console.error(
+          "Erreur lors de la création dans la base de données:",
+          error
+        );
+      }
+    }
+
+    return false;
+  } catch (error) {
+    console.error("Erreur lors de l'inscription:", error);
+    return false;
+  }
 };
 
 export const getUser = async (): Promise<User | null> => {

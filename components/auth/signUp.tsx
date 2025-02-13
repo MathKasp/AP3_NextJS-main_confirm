@@ -1,13 +1,13 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { useToast } from '@/hooks/use-toast';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { MailCheck, Loader2 } from 'lucide-react';
-import { useForm } from 'react-hook-form';
+import { useState } from "react";
+import { useToast } from "@/hooks/use-toast";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { MailCheck, Loader2 } from "lucide-react";
+import { useForm } from "react-hook-form";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -16,8 +16,8 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from '@/components/ui/alert-dialog';
-import { signupUserByEmailAndPassword } from '@/services/authService';
+} from "@/components/ui/alert-dialog";
+import { signupUserByEmailAndPassword } from "@/services/authService";
 
 export default function SignUp() {
   const { toast } = useToast();
@@ -26,15 +26,18 @@ export default function SignUp() {
 
   const { register, handleSubmit, watch } = useForm();
 
-  const email = watch('email');
-  const password = watch('password');
+  const email = watch("email");
+  const password = watch("password");
+  const nom = watch("nom");
+  const prenom = watch("prenom");
 
   const onSubmit = async (data: any) => {
     setLoading(true);
-
     const result = await signupUserByEmailAndPassword(
       data.email,
-      data.password
+      data.password,
+      data.nom,
+      data.prenom
     );
 
     setLoading(false);
@@ -43,9 +46,9 @@ export default function SignUp() {
       setDialogOpen(true);
     } else {
       toast({
-        title: 'Erreur',
-        description: 'Erreur lors de l\'inscription',
-        variant: 'destructive',
+        title: "Erreur",
+        description: "Erreur lors de l'inscription",
+        variant: "destructive",
       });
     }
   };
@@ -69,8 +72,10 @@ export default function SignUp() {
 
             <AlertDialogDescription>
               <span className="mt-2 text-center block">
-                Un email de confirmation a été envoyé à votre adresse.<br />
-                Veuillez vérifier votre boîte mail pour confirmer votre inscription.
+                Un email de confirmation a été envoyé à votre adresse.
+                <br />
+                Veuillez vérifier votre boîte mail pour confirmer votre
+                inscription.
               </span>
             </AlertDialogDescription>
           </AlertDialogHeader>
@@ -78,11 +83,10 @@ export default function SignUp() {
           <AlertDialogFooter className="mt-2 flex justify-center">
             <AlertDialogAction
               className="w-full"
-              onClick={() => (window.location.href = '/')}
+              onClick={() => (window.location.href = "/")}
             >
               Retour
             </AlertDialogAction>
-
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
@@ -100,19 +104,36 @@ export default function SignUp() {
                   id="email"
                   type="email"
                   placeholder="m@example.com"
-                  {...register('email', { required: true })}
+                  {...register("email", { required: true })}
                 />
               </div>
 
+              <div className="grid gap-2">
+                <Label htmlFor="nom">Nom</Label>
+                <Input
+                  id="nom"
+                  type="text"
+                  placeholder=""
+                  {...register("nom", { required: true })}
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="prenom">Prenom</Label>
+                <Input
+                  id="prenom"
+                  type="text"
+                  placeholder=""
+                  {...register("prenom", { required: true })}
+                />
+              </div>
               <div className="grid gap-2">
                 <Label htmlFor="password">Mot de passe</Label>
                 <Input
                   id="password"
                   type="password"
-                  {...register('password', { required: true })}
+                  {...register("password", { required: true })}
                 />
               </div>
-
               {loading ? (
                 <Button className="w-full" disabled>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -122,7 +143,7 @@ export default function SignUp() {
                 <Button
                   type="submit"
                   className="w-full"
-                  disabled={!email || !password}
+                  disabled={!email || !prenom || !nom || !password}
                 >
                   Créer votre compte
                 </Button>

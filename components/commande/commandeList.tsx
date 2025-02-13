@@ -39,10 +39,11 @@ const CommandeList = forwardRef<CommandeListRef>((_, ref) => {
     queryKey: ["commande"],
     queryFn: () => fetch("/api/commande").then((res) => res.json()),
   });
-  //console.log("laaaaaaaaaa, toii toiiit oiit", commandes)
+  //console.log("laaaaaaaaaa, toii toiii toiit", commandes)
+  
   const handleDelete = async (id: number) => {
     try {
-      const response = await fetch(`/api/commande/${id}`, {
+      const response = await fetch(`/api/commandeAttente/${id}`, {
         method: "DELETE",
       });
 

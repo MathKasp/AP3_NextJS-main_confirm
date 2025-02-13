@@ -6,8 +6,8 @@ export async function GetAllBookings(): Promise<Booking[]> {
   try {
       const bookings = await prisma.booking.findMany({
           include: {
-              user: true,
-              apartment: true,
+              User: true,
+              Apartment: true,
           },
       });
       return bookings;
@@ -24,8 +24,8 @@ export async function GetBookingById(id: string) : Promise<Booking> {
         id: id,
       },
       include: {
-        user: true,
-        apartment: true,
+        User: true,
+        Apartment: true,
       },
     });
     if (!booking) {
@@ -44,8 +44,8 @@ export async function GetBookingsByUser(user: User): Promise<Booking[]> {
         id: user?.id,
       },
       include: {
-        user: true,
-        apartment: true,
+        User: true,
+        Apartment: true,
       },
     });
     if (!bookings) {

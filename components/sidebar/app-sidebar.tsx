@@ -44,7 +44,7 @@ const data = {
   navMain: [
     {
       title: "Espace du Stock",
-      url: "/dashboard",
+      url: "/dashboard/stocks",
       icon: Eye,
       isActive: true
     },

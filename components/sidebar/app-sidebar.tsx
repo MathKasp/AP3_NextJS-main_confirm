@@ -2,7 +2,6 @@
 
 import * as React from "react"
 import { BookOpen, Bot, Building2, CircleHelp, Command, Frame, GraduationCap, LifeBuoy, Map, NotebookPen, PieChart, Send, Settings2, SquareTerminal, Eye, Package, Boxes} from "lucide-react"
-
 import { NavMain } from "@/components/sidebar/nav-main"
 import { NavProjects } from "@/components/sidebar/nav-projects"
 import { NavSecondary } from "@/components/sidebar/nav-secondary"

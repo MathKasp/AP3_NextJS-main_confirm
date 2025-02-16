@@ -117,7 +117,7 @@ model utilisateurs {
 enum statut_commande {
   en_attente
   validee
-  invalid_e  @map("invalidée")
+  invalidee
 }
 
 enum stock_type {

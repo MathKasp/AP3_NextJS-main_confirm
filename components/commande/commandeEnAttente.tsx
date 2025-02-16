@@ -12,12 +12,12 @@ export type CommandeWithRelations = SerializedCommandes & {
   utilisateurs: utilisateurs;
   stocks: stocks;
 };
-
-export type PendingCommandeListRef = {
+// c'est bon
+export type commandeAttenteRef = {
   refresh: () => void;
 };
 
-const PendingCommandeList = forwardRef<PendingCommandeListRef>((_, ref) => {
+const commandeAttente = forwardRef<commandeAttenteRef>((_, ref) => {
   const queryClient = useQueryClient();
   const { toast } = useToast();
 
@@ -28,7 +28,7 @@ const PendingCommandeList = forwardRef<PendingCommandeListRef>((_, ref) => {
     refetch,
   } = useQuery<CommandeWithRelations[], Error>({
     queryKey: ["commandes"],
-    queryFn: () => fetch("/api/pendingCommandes").then((res) => res.json()),
+    queryFn: () => fetch("/api/commandeAttente").then((res) => res.json()),
   });
 
   type ValidateCommandeArgs = {
@@ -43,7 +43,7 @@ const PendingCommandeList = forwardRef<PendingCommandeListRef>((_, ref) => {
       id_stock,
       quantite,
     }: ValidateCommandeArgs) => {
-      const response = await fetch(`/api/pendingCommandes/${id_commande}`, {
+      const response = await fetch(`/api/commandeAttente/${id_commande}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -78,7 +78,7 @@ const PendingCommandeList = forwardRef<PendingCommandeListRef>((_, ref) => {
 
   const invalidateCommandeMutation = useMutation({
     mutationFn: async (id_commande: number) => {
-      const response = await fetch(`/api/pendingCommandes/${id_commande}`, {
+      const response = await fetch(`/api/commandeAttente/${id_commande}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -185,6 +185,6 @@ const PendingCommandeList = forwardRef<PendingCommandeListRef>((_, ref) => {
   );
 });
 
-PendingCommandeList.displayName = "CommandeList";
+commandeAttente.displayName = "CommandeList";
 
-export default PendingCommandeList;
+export default commandeAttente;

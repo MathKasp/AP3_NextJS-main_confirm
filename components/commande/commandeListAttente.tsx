@@ -78,7 +78,7 @@ const CommmandeListAttente = forwardRef<CommmandeListAttenteRef>((_, ref) => {
 
   const invalidateCommandeMutation = useMutation({
     mutationFn: async (id_commande: number) => {
-      const response = await fetch(`/api/pendingCommandes/${id_commande}`, {
+      const response = await fetch(`/api/commandeAttente/${id_commande}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",

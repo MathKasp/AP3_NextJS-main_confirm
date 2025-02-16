@@ -1,18 +1,49 @@
 import { CreateUtilisateurs, GetAllUtilisateurs } from "@/services/utilisateurService";
+import { PrismaClient } from "@prisma/client";
 import { NextResponse } from "next/server";
 
-export async function GET() {
-    try {
-        const utilisateurs = await GetAllUtilisateurs();
+const prisma = new PrismaClient();
 
-        return NextResponse.json(utilisateurs, { status: 200 });
-    } catch (error) {
-        console.error("Error fetching utilisateurs:", error);
+export async function GET(request: Request) {
+    try {
+        const { searchParams } = new URL(request.url);
+        const email = searchParams.get('email');
+    
+        if (!email) {
+          return NextResponse.json(
+            { error: 'Email requis' },
+            { status: 400 }
+          );
+        }
+    
+        const utilisateur = await prisma.utilisateurs.findFirst({
+          where: {
+            email: email
+          }
+        });
+    
+        if (!utilisateur) {
+          return NextResponse.json(
+            { error: 'Utilisateur non trouvé' },
+            { status: 404 }
+          );
+        }
+    
+        const serializedUser = {
+          ...utilisateur,
+          id_utilisateur: Number(utilisateur.id_utilisateur),
+          id_role: Number(utilisateur.id_role)
+        };
+    
+        return NextResponse.json(serializedUser);
+      } catch (error) {
         return NextResponse.json(
-            { error: "Failed to fetch utilisateurs" },
-            { status: 500 }
+          { error: 'Erreur serveur' },
+          { status: 500 }
         );
-    }
+      } finally {
+        await prisma.$disconnect();
+      }
 }
 
 export async function POST(request: Request) {

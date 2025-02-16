@@ -34,10 +34,13 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-         <AuthProvider>
-            <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+        <QueryClientProvider client={queryClient}>
+          <AuthProvider>
+
+            {children}
             <Toaster />
-          </AuthProvider>    
+          </AuthProvider>
+        </QueryClientProvider>
       </body>
     </html>
   );

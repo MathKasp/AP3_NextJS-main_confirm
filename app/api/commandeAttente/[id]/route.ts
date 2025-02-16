@@ -2,13 +2,13 @@ import { NextRequest, NextResponse } from "next/server";
 import { DeleteCommande, UpdateStatutCommande } from "@/services/commandeService";
 import { $Enums } from "@prisma/client";
 
+
 export async function PATCH(
   req: NextRequest,
   { params }: { params: { id: number } }
 ) {
   try {
-    const { id } = params;
-
+    const { id } = await params;
 
     if (!id) {
       return NextResponse.json(
@@ -26,13 +26,25 @@ export async function PATCH(
         { status: 400 }
       );
     }
+    
+    // if (statut === "invalidee") {
+    //   const updatedCommande = await UpdateStatutCommande({
+    //     id_commande: id,
+    //     statut: statut as $Enums.statut_commande,
+    //     id_stock: id_stock, 
+    //     quantite: quantite, 
+    //   });
+      
+    //   return NextResponse.json(updatedCommande, { status: 200 });
+    // }
+    
     const updatedCommande = await UpdateStatutCommande({
       id_commande: id,
       statut: statut as $Enums.statut_commande,
       id_stock: id_stock,
       quantite: quantite,
     });
-
+    
     if (!updatedCommande) {
       return NextResponse.json(
         { error: "Failed to update commande." },
@@ -44,7 +56,7 @@ export async function PATCH(
   } catch (error) {
     console.error("Error updating commande:", error);
     return NextResponse.json(
-      { error:  `${(error as Error).message}` },
+      { error: `${(error as Error).message}` },
       { status: 500 }
     );
   }

@@ -37,9 +37,9 @@ export function NavMain({
     <SidebarGroup>
 
       <SidebarMenuButton asChild>
-        <a href="#">
+        <a href="">
           <GraduationCap />
-          <span>Dashboard</span>
+          <span>Bienvenu</span>
         </a>
       </SidebarMenuButton>
       

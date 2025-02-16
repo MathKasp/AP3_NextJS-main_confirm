@@ -1,21 +1,3 @@
-// "use client"
-// import { AppSidebar } from "@/components/sidebar/app-sidebar"
-// import { SidebarInset, SidebarProvider, SidebarTrigger,} from "@/components/ui/sidebar"
-
-
-// export default function commande() {
-//     return (
-//         <>
-//             <SidebarProvider>
-//             <AppSidebar />  
-//             <div>
-//                 Binjour
-//             </div>
-//             </SidebarProvider>
-//         </>
-//     )
-// }
-
 "use client";
 
 import { useRef, useState } from "react";
@@ -35,7 +17,7 @@ import CommandeList, { CommandeListRef,} from "@/components/commande/commandeLis
 import { CommandeForm, CommandeFormSchema,} from "@/components/commande/commandeForm";
 
 export default function Page() {
-  const { user, loading } = useAuth();
+  const { user, loading, utilisateur } = useAuth();
   const { toast } = useToast();
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -48,12 +30,16 @@ export default function Page() {
 
   const handleFormSubmit = async (data: z.infer<typeof CommandeFormSchema>) => {
     try {
+      const uptdateData = {
+        ...data,
+        id_utilisateur : utilisateur?.id_utilisateur 
+      }
       await fetch("/api/commande", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify(uptdateData),
       });
 
       setIsDialogOpen(false);

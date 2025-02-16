@@ -1,24 +1,24 @@
 "use client";
 
-import { useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { AppSidebar } from "@/components/sidebar/app-sidebar";
-import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbPage,} from "@/components/ui/breadcrumb";
+import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbPage, } from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger,} from "@/components/ui/dialog";
-import { SidebarInset, SidebarProvider, SidebarTrigger,} from "@/components/ui/sidebar";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, } from "@/components/ui/dialog";
+import { SidebarInset, SidebarProvider, SidebarTrigger, } from "@/components/ui/sidebar";
 import { useAuth } from "@/context/AuthContext";
 import { Plus } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { z } from "zod";
+import { string, z } from "zod";
 import { useToast } from "@/hooks/use-toast";
-import CommandeList, { CommmandeListAttenteRef,} from "@/components/commande/commandeListAttente";
-import { CommandeForm, CommandeFormSchema,} from "@/components/commande/commandeForm";
+import CommandeList, { CommmandeListAttenteRef, } from "@/components/commande/commandeListAttente";
+import { CommandeForm, CommandeFormSchema, } from "@/components/commande/commandeForm";
 import CommmandeListAttente from "@/components/commande/commandeListAttente";
 
 export default function Page() {
-  const { user, loading } = useAuth();
+  const { user, loading, utilisateur } = useAuth();
   const { toast } = useToast();
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -52,6 +52,8 @@ export default function Page() {
   };
 
   if (loading) return <p>Chargement...</p>;
+  
+  const userType = String(utilisateur?.id_role)
 
   return (
     <SidebarProvider>
@@ -70,40 +72,18 @@ export default function Page() {
             </Breadcrumb>
           </div>
         </header>
+        {userType !== '1' && (
+          <div> Seul les administrateurs peuvent effectuer des actions ici </div>
+        )}
+        {userType === '1' && (
         <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
           <Card className="border-none">
-            <CardHeader>
-              <CardTitle>
-                <div className="flex justify-between">
-                  <h2>Commandes sortie</h2>
-                  <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-                    <DialogTrigger asChild>
-                      <Button onClick={handleNewCommande}>
-                        <Plus /> Ajouter une commande
-                      </Button>
-                    </DialogTrigger>
-                    <DialogContent
-                      className={cn(
-                        "sm:max-w-[600px] w-full max-h-[90vh]",
-                        "overflow-y-auto"
-                      )}
-                    >
-                      <DialogHeader>
-                        <DialogTitle>Nouvelle commande</DialogTitle>
-                      </DialogHeader>
-                      <div className="grid py-4 gap-4">
-                        <CommandeForm onFormSubmit={handleFormSubmit} />
-                      </div>
-                    </DialogContent>
-                  </Dialog>
-                </div>
-              </CardTitle>
-            </CardHeader>
             <CardContent>
               <CommmandeListAttente ref={CommmandeListAttenteRef} />
             </CardContent>
           </Card>
         </div>
+        )}
       </SidebarInset>
     </SidebarProvider>
   );

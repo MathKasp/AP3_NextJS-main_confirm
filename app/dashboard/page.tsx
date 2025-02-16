@@ -3,12 +3,12 @@
 import { useRef, useState } from "react"
 import BookingsList, { BookingListRef } from "@/components/bookings/bookingsList"
 import { AppSidebar } from "@/components/sidebar/app-sidebar"
-import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbPage,} from "@/components/ui/breadcrumb"
+import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbPage, } from "@/components/ui/breadcrumb"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
-import {Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger,} from "@/components/ui/dialog"
-import { SidebarInset, SidebarProvider, SidebarTrigger,} from "@/components/ui/sidebar"
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, } from "@/components/ui/dialog"
+import { SidebarInset, SidebarProvider, SidebarTrigger, } from "@/components/ui/sidebar"
 import { useAuth } from "@/context/AuthContext"
 import { Import, Plus } from "lucide-react"
 import { BookingForm, BookingFormSchema } from "@/components/bookings/bookingForm"
@@ -38,7 +38,7 @@ export default function Page() {
         },
         body: JSON.stringify(data),
       });
-  
+
       setIsDialogOpen(false);
       toast({
         title: 'Success',
@@ -51,7 +51,7 @@ export default function Page() {
       console.error("Erreur lors de la création de la réservation :", error);
     }
   };
-  
+
 
   if (loading) return <p>Chargement...</p>
 
@@ -66,7 +66,7 @@ export default function Page() {
             <Breadcrumb>
               <BreadcrumbList>
                 <BreadcrumbItem>
-                  <BreadcrumbPage>Dashboard</BreadcrumbPage>
+                  <BreadcrumbPage>Acceuil</BreadcrumbPage>
                 </BreadcrumbItem>
               </BreadcrumbList>
             </Breadcrumb>
@@ -77,33 +77,13 @@ export default function Page() {
             <CardHeader>
               <CardTitle>
                 <div className="flex justify-between">
-                  <h2>Réservations</h2>
-                  <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-                    <DialogTrigger asChild>
-                      <Button onClick={handleNewReservation}>
-                        <Plus /> Ajouter une réservation
-                      </Button>
-                    </DialogTrigger>
-                    <DialogContent
-                      className={cn(
-                        "sm:max-w-[600px] w-full max-h-[90vh]",
-                        "overflow-y-auto"
-                      )}
-                    >
-                      <DialogHeader>
-                        <DialogTitle>Nouvelle réservation</DialogTitle>
-                      </DialogHeader>
-                      <div className="grid py-4 gap-4">
-                        <BookingForm onFormSubmit={handleFormSubmit} />
-                      </div>
-                    </DialogContent>
-                  </Dialog>
+                  <h2>Bienvenu ! </h2>
                 </div>
               </CardTitle>
             </CardHeader>
-            <CardContent>
-              <BookingsList ref={bookingListRef}/>
-            </CardContent>
+            <Dialog>
+                Veuillez selectionner un espace dans la barre de navigation a gauche.
+            </Dialog>
           </Card>
         </div>
       </SidebarInset>

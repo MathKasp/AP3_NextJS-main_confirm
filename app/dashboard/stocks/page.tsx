@@ -3,12 +3,12 @@
 import { useRef, useState } from "react"
 import stockList, { StockListRef } from "@/components/stocks/stockList"
 import { AppSidebar } from "@/components/sidebar/app-sidebar"
-import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbPage,} from "@/components/ui/breadcrumb"
+import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbPage, } from "@/components/ui/breadcrumb"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
-import {Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger,} from "@/components/ui/dialog"
-import { SidebarInset, SidebarProvider, SidebarTrigger,} from "@/components/ui/sidebar"
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, } from "@/components/ui/dialog"
+import { SidebarInset, SidebarProvider, SidebarTrigger, } from "@/components/ui/sidebar"
 import { useAuth } from "@/context/AuthContext"
 import { Import, Plus } from "lucide-react"
 import { BookingForm, BookingFormSchema } from "@/components/bookings/bookingForm" //
@@ -16,10 +16,11 @@ import { cn } from "@/lib/utils"
 import { z } from "zod"
 import { useToast } from '@/hooks/use-toast';
 import StockList from "@/components/stocks/stockList"
+import { StockForm, StockFormSchema } from "@/components/stocks/stockForm"
 //#endregion
 
 export default function Page() {
-  const { user, loading } = useAuth()
+  const { user, loading, utilisateur } = useAuth()
   const { toast } = useToast();
 
   const [isDialogOpen, setIsDialogOpen] = useState(false)
@@ -31,16 +32,16 @@ export default function Page() {
   }
 
 
-  const handleFormSubmit = async (data: z.infer<typeof BookingFormSchema>) => {
+  const handleFormSubmit = async (data: z.infer<typeof StockFormSchema>) => {
     try {
-      await fetch('/api/bookings', {
+      await fetch('/api/stocks', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(data),
       });
-  
+
       setIsDialogOpen(false);
       toast({
         title: 'Success',
@@ -53,9 +54,11 @@ export default function Page() {
       console.error("Erreur lors de la création de la réservation :", error);
     }
   };
-  
+
 
   if (loading) return <p>Chargement...</p>
+
+  const utilisateurType = String(utilisateur?.id_role)
 
   return (
     <SidebarProvider>
@@ -80,31 +83,34 @@ export default function Page() {
               <CardTitle>
                 <div className="flex justify-between">
                   <h2>Stock</h2>
-                  {/* <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-                    <DialogTrigger asChild>
-                      <Button onClick={handleNewReservation}>
-                        <Plus /> Ajouter une réservation
-                      </Button>
-                    </DialogTrigger>
-                    <DialogContent
-                      className={cn(
-                        "sm:max-w-[600px] w-full max-h-[90vh]",
-                        "overflow-y-auto"
-                      )}
-                    >
-                      <DialogHeader>
-                        <DialogTitle>Nouvelle réservation</DialogTitle>
-                      </DialogHeader>
-                      <div className="grid py-4 gap-4">
-                        <BookingForm onFormSubmit={handleFormSubmit} />
-                      </div>
-                    </DialogContent>
-                  </Dialog> */}
+                  {utilisateurType === '1' && (
+                    <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+                      <DialogTrigger asChild>
+                        <Button onClick={handleNewReservation}>
+                          <Plus /> Ajouter un nouveau type de Stock
+                        </Button>
+                      </DialogTrigger>
+                      <DialogContent
+                        className={cn(
+                          "sm:max-w-[600px] w-full max-h-[90vh]",
+                          "overflow-y-auto"
+                        )}
+                      >
+                        <DialogHeader>
+                          <DialogTitle>Nouveau stock</DialogTitle>
+                        </DialogHeader>
+                        <div className="grid py-4 gap-4">
+                          <StockForm onFormSubmit={handleFormSubmit} />
+                        </div>
+                      </DialogContent>
+                    </Dialog>
+                  )}
+
                 </div>
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <StockList ref={StockListRef}/>
+              <StockList ref={StockListRef} />
             </CardContent>
           </Card>
         </div>

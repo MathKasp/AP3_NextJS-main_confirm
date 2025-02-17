@@ -1,4 +1,4 @@
-import { GetAllStocks } from "@/services/stockService"; //import { CreateStocks, GetAllStocks } from "@/services/stockService";
+import { CreateStocks, GetAllStocks } from "@/services/stockService"; //import { CreateStocks, GetAllStocks } from "@/services/stockService";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET() {
@@ -10,21 +10,20 @@ export async function GET() {
   }
 }
 
-// export async function POST(req: NextRequest) {
-//   try {
-//     const body = await req.json();
-
-//     const newBooking = await CreateBooking({ 
-//       startDate: body.startDate, 
-//       endDate: body.endDate,
-//       apartmentId: body.apartmentId,
-//       userId: body.userId,
-//     });
-
-//     return NextResponse.json(newBooking, { status: 201 });
-//   } catch (error) {
-//     console.error("Error creating booking:", error);
-//     return NextResponse.json({ error: "Failed to create booking" }, { status: 500 });
-//   }
-// }
-
+export async function POST(req: NextRequest) {
+  try {
+    const body = await req.json();
+    const newStock = await CreateStocks({
+      nom: body.nom,
+      description: body.description,
+      type: body.type,
+    });
+    return NextResponse.json(newStock, { status: 201 });
+  } catch (error) {
+    console.error("Error creating stock:", error);
+    return NextResponse.json(
+      { error: "Failed to create stock" },
+      { status: 500 }
+    );
+  }
+}

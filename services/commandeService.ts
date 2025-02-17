@@ -47,6 +47,7 @@ export async function CreateCommandeAdmin(data: {
     id_stock: string;
 }): Promise<SerializedCommandes | null> {
     try {
+        console.log("On est s'il vous ^plait u peutnde respect",data)
         const commande = await prisma.commandes.create({
             data: {
                 id_utilisateur: parseInt(data.id_utilisateur, 10),
@@ -65,6 +66,7 @@ export async function CreateCommandeAdmin(data: {
         if (!stock) {
             throw new Error("Stock non trouvée.");
         }
+        console.log("Les rododinderons sont si bon",serializedCommandes)
         await prisma.stocks.update({
             where: { id_stock: BigInt(data.id_stock) },
             data: {
@@ -72,6 +74,7 @@ export async function CreateCommandeAdmin(data: {
             },
         });
 
+        console.log("Finito bueno")
         await prisma.mouvements.create({
             data: {
                 id_stock: BigInt(data.id_stock),

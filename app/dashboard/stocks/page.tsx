@@ -17,6 +17,8 @@ import { z } from "zod"
 import { useToast } from '@/hooks/use-toast';
 import StockList from "@/components/stocks/stockList"
 import { StockForm, StockFormSchema } from "@/components/stocks/stockForm"
+import { CommandeForm, CommandeFormSchema } from "@/components/commande/commandeForm"
+
 //#endregion
 
 export default function Page() {
@@ -24,12 +26,43 @@ export default function Page() {
   const { toast } = useToast();
 
   const [isDialogOpen, setIsDialogOpen] = useState(false)
+  const [isDialogCommandeOpen, setIsDialogCommandeOpen] = useState(false)
 
   const StockListRef = useRef<StockListRef>(null);
 
   const handleNewReservation = () => {
     setIsDialogOpen(true)
   }
+
+  const handleNewCommande = () => {
+    setIsDialogCommandeOpen(true)
+  }
+
+  const controllerRestock = async (data: z.infer<typeof CommandeFormSchema>) => {
+    try {
+      const updateData = {
+        ...data,
+        id_utilisateur : utilisateur?.id_utilisateur 
+      }
+      await fetch("/api/commandeAdmin", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updateData),
+      });
+
+      setIsDialogCommandeOpen(false);
+      toast({
+        title: "Success",
+        description: "Commande créée",
+        variant: "default",
+      });
+      //CommandeListRef.current?.refresh();const CommandeListRef = useRef<CommandeListRef>(null);
+    } catch (error) {
+      console.error("Erreur lors de la création de la commande :", error);
+    }
+  };
 
 
   const handleFormSubmit = async (data: z.infer<typeof StockFormSchema>) => {
@@ -84,6 +117,28 @@ export default function Page() {
                 <div className="flex justify-between">
                   <h2>Stock</h2>
                   {utilisateurType === '1' && (
+                    <Dialog open={isDialogCommandeOpen} onOpenChange={setIsDialogCommandeOpen}>
+                      <DialogTrigger asChild>
+                        <Button onClick={handleNewCommande}>
+                          <Plus /> Ajouter de la quantité à un Stock
+                        </Button>
+                      </DialogTrigger>
+                      <DialogContent
+                        className={cn(
+                          "sm:max-w-[600px] w-full max-h-[90vh]",
+                          "overflow-y-auto"
+                        )}
+                      >
+                        <DialogHeader>
+                          <DialogTitle>Restocker (Cette opération peut prendre quelques secondes)</DialogTitle>
+                        </DialogHeader>
+                        <div className="grid py-4 gap-4">
+                          <CommandeForm onFormSubmit={controllerRestock} />
+                        </div>
+                      </DialogContent>
+                    </Dialog>
+                  )}
+                  {utilisateurType === '1' && (
                     <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
                       <DialogTrigger asChild>
                         <Button onClick={handleNewReservation}>
@@ -105,7 +160,7 @@ export default function Page() {
                       </DialogContent>
                     </Dialog>
                   )}
-
+                  
                 </div>
               </CardTitle>
             </CardHeader>

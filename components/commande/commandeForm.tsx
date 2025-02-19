@@ -52,6 +52,7 @@ export function CommandeForm({
   function onSubmit(data: z.infer<typeof CommandeFormSchema>) {
     if (onFormSubmit) {
       onFormSubmit(data);
+      location.reload();
     }
   }
 

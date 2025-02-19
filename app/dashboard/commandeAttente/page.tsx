@@ -1,55 +1,19 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import { AppSidebar } from "@/components/sidebar/app-sidebar";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbPage, } from "@/components/ui/breadcrumb";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, } from "@/components/ui/dialog";
 import { SidebarInset, SidebarProvider, SidebarTrigger, } from "@/components/ui/sidebar";
 import { useAuth } from "@/context/AuthContext";
-import { Plus } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { string, z } from "zod";
-import { useToast } from "@/hooks/use-toast";
-import CommandeList, { CommmandeListAttenteRef, } from "@/components/commande/commandeListAttente";
-import { CommandeForm, CommandeFormSchema, } from "@/components/commande/commandeForm";
+import { CommmandeListAttenteRef, } from "@/components/commande/commandeListAttente";
 import CommmandeListAttente from "@/components/commande/commandeListAttente";
 
 export default function Page() {
-  const { user, loading, utilisateur } = useAuth();
-  const { toast } = useToast();
-
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const { loading, utilisateur } = useAuth();
 
   const CommmandeListAttenteRef = useRef<CommmandeListAttenteRef>(null);
-
-  const handleNewCommande = () => {
-    setIsDialogOpen(true);
-  };
-
-  const handleFormSubmit = async (data: z.infer<typeof CommandeFormSchema>) => {
-    try {
-      await fetch("/api/commande", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-
-      setIsDialogOpen(false);
-      toast({
-        title: "Success",
-        description: "Commande créée",
-        variant: "default",
-      });
-      CommmandeListAttenteRef.current?.refresh();
-    } catch (error) {
-      console.error("Erreur lors de la création de la commande :", error);
-    }
-  };
 
   if (loading) return <p>Chargement...</p>;
   

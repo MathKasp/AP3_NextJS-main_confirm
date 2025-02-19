@@ -1,13 +1,11 @@
 import React, { forwardRef, useImperativeHandle, useState } from "react";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Table, TableBody, TableHead, TableHeader, TableRow, TableCell,} from "@/components/ui/table";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { Table, TableBody, TableHead, TableHeader, TableRow, TableCell, } from "@/components/ui/table";
 import { Button } from "../ui/button";
-import { Pencil, Trash2 } from "lucide-react";
+import { Trash2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { stocks, utilisateurs } from "@prisma/client";
 import { SerializedCommandes } from "@/services/commandeService";
-import { comma } from "postcss/lib/list";
-import { useAuth } from "@/context/AuthContext";
 
 export type CommandeWithRelations = SerializedCommandes & {
   utilisateurs: utilisateurs;
@@ -19,16 +17,7 @@ export type CommandeListRef = {
 };
 
 const CommandeList = forwardRef<CommandeListRef>((_, ref) => {
-  const queryClient = useQueryClient();
   const { toast } = useToast();
-  const { user } = useAuth();
-  const [editingCommande, setEditingCommande] =
-    useState<CommandeWithRelations | null>(null);
-  const [editData, setEditData] = useState({
-    quantite: 0,
-    date_commande: "",
-    id_stock: 0,
-  });
 
   const {
     data: commandes,
@@ -39,8 +28,7 @@ const CommandeList = forwardRef<CommandeListRef>((_, ref) => {
     queryKey: ["commande"],
     queryFn: () => fetch("/api/commande").then((res) => res.json()),
   });
-  //console.log("laaaaaaaaaa, toii toiii toiit", commandes)
-  
+
   const handleDelete = async (id: number) => {
     try {
       const response = await fetch(`/api/commandeAttente/${id}`, {
@@ -95,8 +83,8 @@ const CommandeList = forwardRef<CommandeListRef>((_, ref) => {
                   String(commande.statut) === "validee"
                     ? "text-green-500"
                     : String(commande.statut) === "invalidee"
-                    ? "text-red-500"
-                    : ""
+                      ? "text-red-500"
+                      : ""
                 }
               >
                 {commande.statut}
@@ -109,13 +97,6 @@ const CommandeList = forwardRef<CommandeListRef>((_, ref) => {
               <TableCell>
                 {String(commande.statut) === "en_attente" && (
                   <div className="flex space-x-2">
-                    {/* <Button
-                      variant="ghost"
-                      size="icon"
-                      onClick={() => handleEdit(commande)}
-                    >
-                      <Pencil className="h-4 w-4" />
-                    </Button> */}
                     <Button
                       variant="ghost"
                       size="icon"

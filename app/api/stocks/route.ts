@@ -1,4 +1,4 @@
-import { CreateStocks, GetAllStocks } from "@/services/stockService"; //import { CreateStocks, GetAllStocks } from "@/services/stockService";
+import { CreateStocks, GetAllStocks } from "@/services/stockService"; 
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET() {

@@ -1,9 +1,8 @@
 "use client"
 
 import * as React from "react"
-import { BookOpen, Bot, Building2, CircleHelp, Command, Frame, GraduationCap, LifeBuoy, Map, NotebookPen, PieChart, Send, Settings2, SquareTerminal, Eye, Package, Boxes, Archive} from "lucide-react"
+import { CircleHelp, GraduationCap, LifeBuoy, Eye, Package, Boxes, Archive} from "lucide-react"
 import { NavMain } from "@/components/sidebar/nav-main"
-import { NavProjects } from "@/components/sidebar/nav-projects"
 import { NavSecondary } from "@/components/sidebar/nav-secondary"
 import { NavUser } from "@/components/sidebar/nav-user"
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem,} from "@/components/ui/sidebar"

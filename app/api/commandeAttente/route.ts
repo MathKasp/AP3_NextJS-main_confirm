@@ -1,5 +1,5 @@
-import { CreateCommande, GetAllCommandes, GetCommandesAttente } from "@/services/commandeService";
-import { NextRequest, NextResponse } from "next/server";
+import { GetCommandesAttente } from "@/services/commandeService";
+import { NextResponse } from "next/server";
 
 export async function GET() {
   try {

@@ -1,4 +1,4 @@
-import { CreateUtilisateurs, GetAllUtilisateurs } from "@/services/utilisateurService";
+import { CreateUtilisateurs } from "@/services/utilisateurService";
 import { PrismaClient } from "@prisma/client";
 import { NextResponse } from "next/server";
 

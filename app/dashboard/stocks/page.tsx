@@ -1,7 +1,7 @@
 //#region TOUT LES IMPORTS 
 "use client"
 import { useRef, useState } from "react"
-import stockList, { StockListRef } from "@/components/stocks/stockList"
+import { StockListRef } from "@/components/stocks/stockList"
 import { AppSidebar } from "@/components/sidebar/app-sidebar"
 import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbPage, } from "@/components/ui/breadcrumb"
 import { Button } from "@/components/ui/button"
@@ -10,8 +10,7 @@ import { Separator } from "@/components/ui/separator"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, } from "@/components/ui/dialog"
 import { SidebarInset, SidebarProvider, SidebarTrigger, } from "@/components/ui/sidebar"
 import { useAuth } from "@/context/AuthContext"
-import { Import, Plus } from "lucide-react"
-import { BookingForm, BookingFormSchema } from "@/components/bookings/bookingForm" //
+import { Plus } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { z } from "zod"
 import { useToast } from '@/hooks/use-toast';
@@ -22,7 +21,7 @@ import { CommandeForm, CommandeFormSchema } from "@/components/commande/commande
 //#endregion
 
 export default function Page() {
-  const { user, loading, utilisateur } = useAuth()
+  const { loading, utilisateur } = useAuth()
   const { toast } = useToast();
 
   const [isDialogOpen, setIsDialogOpen] = useState(false)
@@ -58,7 +57,6 @@ export default function Page() {
         description: "Commande créée",
         variant: "default",
       });
-      //CommandeListRef.current?.refresh();const CommandeListRef = useRef<CommandeListRef>(null);
     } catch (error) {
       console.error("Erreur lors de la création de la commande :", error);
     }

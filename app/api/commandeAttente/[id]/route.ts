@@ -75,7 +75,7 @@ export async function DELETE(
     }
 
     return NextResponse.json(
-      { message: "Commande supprimer avec succèss." },
+      { message: "Commande supprimer avec succès." },
       { status: 200 }
     );
   } catch (error) {

@@ -17,7 +17,7 @@ import CommandeList, { CommandeListRef,} from "@/components/commande/commandeLis
 import { CommandeForm, CommandeFormSchema,} from "@/components/commande/commandeForm";
 
 export default function Page() {
-  const { user, loading, utilisateur } = useAuth();
+  const { loading, utilisateur } = useAuth();
   const { toast } = useToast();
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);

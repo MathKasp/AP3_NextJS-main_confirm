@@ -1,11 +1,6 @@
 import SignUp from "@/components/auth/signUp"
 import Login from "@/components/auth/login"
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/components/ui/tabs"
+import { Tabs, TabsContent, TabsList, TabsTrigger,} from "@/components/ui/tabs"
 
 export default function Home() {
   return (

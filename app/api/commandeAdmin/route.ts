@@ -1,4 +1,4 @@
-import { CreateCommandeAdmin, GetAllCommandes } from "@/services/commandeService";
+import { CreateCommandeAdmin } from "@/services/commandeService";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {

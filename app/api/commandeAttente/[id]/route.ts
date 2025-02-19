@@ -27,17 +27,6 @@ export async function PATCH(
       );
     }
     
-    // if (statut === "invalidee") {
-    //   const updatedCommande = await UpdateStatutCommande({
-    //     id_commande: id,
-    //     statut: statut as $Enums.statut_commande,
-    //     id_stock: id_stock, 
-    //     quantite: quantite, 
-    //   });
-      
-    //   return NextResponse.json(updatedCommande, { status: 200 });
-    // }
-    
     const updatedCommande = await UpdateStatutCommande({
       id_commande: id,
       statut: statut as $Enums.statut_commande,
@@ -61,6 +50,7 @@ export async function PATCH(
     );
   }
 }
+
 
 export async function DELETE(
   req: NextRequest,

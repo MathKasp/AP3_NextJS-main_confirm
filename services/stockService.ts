@@ -24,7 +24,6 @@ export async function GetAllStocks(): Promise<SerializedStocks[]> {
     console.error("stocks", serializedStocks);
     return serializedStocks;
   } catch (error) {
-    console.error(error);
     throw new Error("Failed to fetch stocks");
   }
 }

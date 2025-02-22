@@ -42,13 +42,8 @@ const data = {
   ],
   navSecondary: [
     {
-      title: "Support",
-      url: "#",
-      icon: LifeBuoy,
-    },
-    {
       title: "FAQ",
-      url: "#",
+      url: "/dashboard/FAQ",
       icon: CircleHelp,
     },
   ],

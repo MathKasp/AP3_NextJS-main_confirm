@@ -36,8 +36,8 @@ export async function CreateCommande(data: {
         );
         return serializedCommandes;
     } catch (error) {
-        console.error("Error creating commande:", error);
-        throw new Error("Failed to create commande");
+        console.error("Erreur lors de la création de la commande:", error);
+        throw new Error("Echec de la création de la commande");
     }
 }
 //
@@ -47,7 +47,6 @@ export async function CreateCommandeAdmin(data: {
     id_stock: string;
 }): Promise<SerializedCommandes | null> {
     try {
-        console.log("On est s'il vous ^plait u peutnde respect",data)
         const commande = await prisma.commandes.create({
             data: {
                 id_utilisateur: parseInt(data.id_utilisateur, 10),
@@ -84,7 +83,7 @@ export async function CreateCommandeAdmin(data: {
 
         return serializedCommandes;
     } catch (error) {
-        throw new Error("Failed to create commande");
+        throw new Error("Echec de la création de la commande");
     }
 }
 //
@@ -148,7 +147,7 @@ export async function UpdateStatutCommande(data: {
         );
         return serializedCommandes;
     } catch (error) {
-        console.error("Error updating commande:", error);
+        console.error("Erreur lors de la mise à jour de la commande:", error);
         throw error;
     }
 }
@@ -173,7 +172,7 @@ export async function GetCommandesAttente(): Promise<SerializedCommandes[]> {
         return serializedCommandes;
     } catch (error) {
         console.error(error);
-        throw new Error("Failed to fetch commandes");
+        throw new Error("Aucune commandes récupérés");
     }
 }
 
@@ -192,7 +191,7 @@ export async function GetAllCommandes(): Promise<SerializedCommandes[]> {
       return serializedCommandes;
     } catch (error) {
       console.error(error);
-      throw new Error("Failed to fetch commandes");
+      throw new Error("Aucune commandes récupérés");
     }
   }
 

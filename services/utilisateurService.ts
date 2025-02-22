@@ -26,7 +26,7 @@ export async function GetAllUtilisateurs(): Promise<SerializedUtilisateurs[]> {
         return SerializedUtilisateurs;
     } catch (error) {
         console.error(error);
-        throw new Error("Failed to fetch utilisateurs");
+        throw new Error("Aucun utilisateurs récupérés");
     }
 }
 
@@ -51,7 +51,7 @@ export async function CreateUtilisateurs(data: {
       );
       return serializedUtilisateurs;
     } catch (error) {
-      console.error("Error creating user:", error);
-      throw new Error("Failed to create user");
+      console.error("Erreur lors de la récupération des utilisateurs :", error);
+      throw new Error("Echec de la création de l'utilisateur");
     }
   }

@@ -24,7 +24,7 @@ export async function GetAllStocks(): Promise<SerializedStocks[]> {
     console.error("stocks", serializedStocks);
     return serializedStocks;
   } catch (error) {
-    throw new Error("Failed to fetch stocks");
+    throw new Error("Aucun stocks récupérés");
   }
 }
 
@@ -47,7 +47,7 @@ export async function CreateStocks(data: {
     );
     return serializedStocks;
   } catch (error) {
-    console.error("Error creating commande:", error);
-    throw new Error("Failed to create commande");
+    console.error("Erreur lors de la création de la commande:", error);
+    throw new Error("Echec de la création de la commande");
   }
 }

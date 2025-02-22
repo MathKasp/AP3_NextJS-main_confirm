@@ -28,7 +28,7 @@ export function NavMain({
         </a>
       </SidebarMenuButton>
       
-      <SidebarGroupLabel>Stock</SidebarGroupLabel>
+      <SidebarGroupLabel>Effectuez vos opérations ici</SidebarGroupLabel>
       <SidebarMenu>
         {items.map((item) => (
           <Collapsible key={item.title} asChild defaultOpen={item.isActive}>

@@ -17,7 +17,6 @@ import { useToast } from '@/hooks/use-toast';
 import StockList from "@/components/stocks/stockList"
 import { StockForm, StockFormSchema } from "@/components/stocks/stockForm"
 import { CommandeForm, CommandeFormSchema } from "@/components/commande/commandeForm"
-
 //#endregion
 
 export default function Page() {

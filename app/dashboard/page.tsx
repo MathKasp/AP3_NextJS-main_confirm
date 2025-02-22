@@ -40,9 +40,13 @@ export default function Page() {
                 </div>
               </CardTitle>
             </CardHeader>
-            <Dialog>
-                Veuillez selectionner un espace dans la barre de navigation a gauche.
-            </Dialog>
+            <div className="flex justify-center items-center py-8">
+              <Dialog >
+                <p className="text-lg font-medium text-gray-800">
+                  Vous pouvez sélectionner un espace dans la barre de navigation à gauche.
+                </p>
+              </Dialog>
+            </div>
           </Card>
         </div>
       </SidebarInset>

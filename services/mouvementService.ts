@@ -27,6 +27,6 @@ export async function GetAllMouvements(): Promise<SerializedMouvement[]> {
     console.error("mouvements", serializedMouvement);
     return serializedMouvement;
   } catch (error) {
-    throw new Error("Failed to fetch mouvements");
+    throw new Error("Aucun mouvements récupérés");
   }
 }

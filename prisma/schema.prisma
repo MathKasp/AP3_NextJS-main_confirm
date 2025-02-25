@@ -8,60 +8,6 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
-model Apartment {
-  id        String    @id
-  name      String
-  address   String
-  cityId    String
-  ownerId   String
-  createdAt DateTime  @default(now())
-  updatedAt DateTime
-  City      City      @relation(fields: [cityId], references: [id])
-  User      User      @relation(fields: [ownerId], references: [id])
-  Booking   Booking[]
-  Review    Review[]
-}
-
-model Booking {
-  id          String    @id
-  startDate   DateTime
-  endDate     DateTime
-  apartmentId String
-  userId      String
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime
-  Apartment   Apartment @relation(fields: [apartmentId], references: [id])
-  User        User      @relation(fields: [userId], references: [id])
-}
-
-model City {
-  id        String      @id
-  name      String      @unique
-  Apartment Apartment[]
-}
-
-model Review {
-  id          String    @id
-  rating      Int
-  comment     String?
-  apartmentId String
-  userId      String
-  createdAt   DateTime  @default(now())
-  Apartment   Apartment @relation(fields: [apartmentId], references: [id])
-  User        User      @relation(fields: [userId], references: [id])
-}
-
-model User {
-  id        String      @id
-  email     String      @unique
-  name      String
-  createdAt DateTime    @default(now())
-  updatedAt DateTime
-  Apartment Apartment[]
-  Booking   Booking[]
-  Review    Review[]
-}
-
 model commandes {
   id_commande    BigInt          @id @default(autoincrement())
   id_utilisateur BigInt
@@ -74,7 +20,6 @@ model commandes {
   mouvements     mouvements[]
 }
 
-/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
 model mouvements {
   id_mouvement   BigInt              @id @default(autoincrement())
   id_stock       BigInt
@@ -92,7 +37,6 @@ model roles {
   utilisateurs utilisateurs[]
 }
 
-/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
 model stocks {
   id_stock            BigInt       @id @default(autoincrement())
   nom                 String       @db.VarChar(255)

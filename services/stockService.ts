@@ -1,4 +1,4 @@
-import { $Enums, PrismaClient, stocks, User } from "@prisma/client";
+import { $Enums, PrismaClient, } from "@prisma/client";
 import JSONbig from 'json-bigint';
 
 const prisma = new PrismaClient();

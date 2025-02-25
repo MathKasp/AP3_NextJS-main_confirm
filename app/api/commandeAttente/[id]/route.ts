@@ -2,13 +2,17 @@ import { NextRequest, NextResponse } from "next/server";
 import { DeleteCommande, UpdateStatutCommande } from "@/services/commandeService";
 import { $Enums } from "@prisma/client";
 
+type routeContexte = {
+  params : Promise<{id : number}>
+}
 
 export async function PATCH(
   req: NextRequest,
-  { params }: { params: { id: number } }
+  context : routeContexte,
 ) {
   try {
-    const { id } = await params;
+    const params = await context.params
+    const { id } = params;
 
     if (!id) {
       return NextResponse.json(
@@ -54,10 +58,11 @@ export async function PATCH(
 
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { id: number } }
+  context : routeContexte,
 ) {
   try {
-    const { id } = await params;
+    const params = await context.params
+    const { id } = params;
 
     if (!id) {
       return NextResponse.json(

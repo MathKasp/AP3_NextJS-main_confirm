@@ -63,6 +63,7 @@ export async function DELETE(
   try {
     const params = await context.params
     const { id } = params;
+    const commandeDeleted = await DeleteCommande(id);
 
     if (!id) {
       return NextResponse.json(
@@ -70,15 +71,11 @@ export async function DELETE(
         { status: 400 }
       );
     }
-
-    const commandeDeleted = await DeleteCommande(id);
-
     if (!commandeDeleted) {
       return NextResponse.json({
         error: "Erreur lors de la suppression commande.",
       });
     }
-
     return NextResponse.json(
       { message: "Commande supprimer avec succès." },
       { status: 200 }
